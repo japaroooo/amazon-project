@@ -1,4 +1,5 @@
 import { products } from '../data/products.js';
+import { cart } from './cart.js';
 
 let productHTML = '';
 
@@ -10,7 +11,9 @@ products.forEach((product) => {
          <div> Star: ${product.rating.stars} </div>
          <div> Rating: ${product.rating.count} </div>
          </div>
-         <div class='product-price'>$${defaultPrice(product.priceCents)}</div>
+         <div class='product-price'>$${(product.priceCents / 100).toFixed(
+           2
+         )}</div>
         
          <select class='js-quantity-selector'>
             <option selected value='1'>1</option>
@@ -19,7 +22,9 @@ products.forEach((product) => {
             <option value='4'>4</option>
             <option value='5'>5</option>
          </select>
-         <button class='add-cart'>Add to Cart</button>
+         <button class='add-cart' data-product-name='${
+           product.name
+         }' data-product-id='${product.id}'>Add to Cart</button>
    </div>
          `;
 
@@ -28,6 +33,32 @@ products.forEach((product) => {
 
 document.querySelector('.products-grid').innerHTML = productHTML;
 
-function defaultPrice(price) {
-  return (Math.floor(price) / 100).toFixed(2);
-}
+// document.querySelectorAll('.js-quantity-selector').forEach((selector) => {
+//   selector.addEventListener('change', () => {
+
+//   });
+// });
+
+document.querySelectorAll('.add-cart').forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const productName = button.dataset.productName;
+    const productId = button.dataset.productId;
+
+    let matchingProduct;
+
+    cart.forEach((product) => {
+      if (product.productId === productId) {
+        matchingProduct = product;
+      }
+    });
+
+    if (matchingProduct) {
+      matchingProduct.quantity += 1;
+    } else {
+      cart.push({ productName, quantity: 1, productId });
+    }
+
+    console.log(cart);
+    document.querySelector('.js-cart-quantity').innerHTML = cart.length;
+  });
+});

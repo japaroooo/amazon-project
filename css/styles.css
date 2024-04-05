@@ -47,9 +47,11 @@ a {
     align-items: center;
 }
 
-.order-link {
+.order-link,
+.cart-link {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .amazon-link:hover,
