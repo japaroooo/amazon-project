@@ -22,6 +22,7 @@ products.forEach((product) => {
             <option value='4'>4</option>
             <option value='5'>5</option>
          </select>
+         <div class='added-to-cart'>✔ Added</div>
          <button class='add-cart'
          }' data-product-id='${product.id}'>Add to Cart</button>
    </div>
@@ -40,7 +41,7 @@ document.querySelector('.products-grid').innerHTML = productHTML;
 
 document.querySelectorAll('.add-cart').forEach((button, index) => {
   button.addEventListener('click', () => {
-    const productId = button.dataset.productId;
+    const { productId } = button.dataset;
     const itemQuantity = document.querySelector(
       `.js-quantity-selector-${productId}`
     );
@@ -67,6 +68,18 @@ document.querySelectorAll('.add-cart').forEach((button, index) => {
 
     console.log(cart);
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+    showAddedToCart(index);
     itemQuantity.selectedIndex = 0;
   });
 });
+
+function showAddedToCart(index) {
+  let addedMessage = document.querySelectorAll('.added-to-cart')[index];
+
+  setTimeout(() => {
+    addedMessage.classList.remove('show-added-to-cart');
+  }, 2000);
+
+  addedMessage.classList.add('show-added-to-cart');
+}

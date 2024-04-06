@@ -85,3 +85,14 @@ select {
     border-radius: 15px;
     border: none;
 }
+
+.added-to-cart {
+    opacity: 0;
+    color: green;
+
+    transition: opacity 0.5s cubic-bezier(0.075, 0.84, 0.76, 1);
+}
+
+.product-container .show-added-to-cart {
+    opacity: 1;
+}
