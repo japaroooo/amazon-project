@@ -7,7 +7,7 @@ const cartList = document.querySelector('.cart-summary');
 let matchingProduct;
 let cartProducts = '';
 
-if (cart.length < 1) {
+if (!cart) {
   cartList.innerHTML = `
   <div class="cart-summary">
     <p>Your cart is empty</p>
@@ -26,7 +26,7 @@ if (cart.length < 1) {
 
     let html = `
     <div class='cart-item-${matchingProduct.id} cart-item'>
-      <div class='delivery-date'>
+      <div class='delivery-date date-item-${matchingProduct.id}'>
       Date
       </div>
     
@@ -60,6 +60,8 @@ if (cart.length < 1) {
 
   cartList.innerHTML = cartProducts;
 }
+
+
 
 document.querySelectorAll('.js-delete-button').forEach(button => {
   button.addEventListener('click', () => {
