@@ -85,6 +85,14 @@ select {
     border: 2px solid white;
 }
 
+/*
+
+
+    Product Catalog Stylesheet
+    Below
+
+*/
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
