@@ -38,7 +38,6 @@ document.querySelector('.products-grid').innerHTML = productHTML;
 
 //   });
 // });
-
 document.querySelectorAll('.add-cart').forEach((button, index) => {
   button.addEventListener('click', () => {
     const { productId } = button.dataset;

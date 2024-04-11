@@ -1,4 +1,4 @@
-import { cart } from '../../data/cart.js';
+import { cart, removeFromCart } from '../../data/cart.js';
 import { products } from '../../data/products.js';
 import { moneyFormat } from '../../script/utils/money-format.js';
 
@@ -25,7 +25,7 @@ if (cart.length < 1) {
     });
 
     let html = `
-    <div class='cart-item'>
+    <div class='cart-item-${matchingProduct.id} cart-item'>
       <div class='delivery-date'>
       Date
       </div>
@@ -40,15 +40,15 @@ if (cart.length < 1) {
               </div>
               <div class='quantity-details'>
                 <div class='item-quantity'>Quantity: ${cartItem.quantity}</div>
-                <span>Update</span>
-                <span>Delete</span>
+                <span class='js-update-button span-button'>Update</span>
+                <span class='js-delete-button span-button' data-product-id='${matchingProduct.id}'>Delete</span>
               </div>
           </div>
           <div class='delivery-details'>
-              <div class='js-choose-date'><b>Choose a delivery option</b>
-                <div><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate()}</div></div>
-                <div><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(1)}</div></div>
-                <div><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(2)}</div></div>
+              <div class='js-choose-date deliveries-date'><b>Choose a delivery option</b>
+                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate()}</div></div>
+                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(1)}</div></div>
+                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(2)}</div></div>
               </div>
           </div>
       </div>        
@@ -61,14 +61,15 @@ if (cart.length < 1) {
   cartList.innerHTML = cartProducts;
 }
 
-function selectDate() {
-  const radioDate = document
-    .querySelectorAll('.js-choose-date')
-    .forEach((radio) => console.log(radio.children));
+document.querySelectorAll('.js-delete-button').forEach(button => {
+  button.addEventListener('click', () => {
+    const { productId } = button.dataset
 
-  console.log(radioDate);
-}
-selectDate();
+    removeFromCart(productId)
+    document.querySelector(`.cart-item-${productId}`).remove()
+  })
+})
+
 
 function currentDate(dayToAdd) {
   const weekday = [

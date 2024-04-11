@@ -77,8 +77,15 @@ section {
    gap: 10px;
 }
 
-.cart-summary button {
+.cart-summary button,
+.span-button {
    width: fit-content;
+   cursor: pointer;
+}
+
+.span-button:hover {
+   text-decoration: underline;
+   color: rgb(0, 178, 218)
 }
 
 .cart-item-details-grid {
@@ -94,4 +101,12 @@ b.red {
 .quantity-details {
    display: flex;
    gap: 15px;
+}
+
+.date-container {
+   display: flex;
+   flex-direction: row;
+   align-items: normal;
+   gap: 5px;
+   margin-top: 5px;
 }
