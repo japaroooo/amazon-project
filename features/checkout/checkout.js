@@ -1,66 +1,89 @@
 import { cart, removeFromCart } from '../../data/cart.js';
 import { products } from '../../data/products.js';
-import { moneyFormat } from '../../script/utils/money-format.js';
+import moneyFormat from '../../script/utils/money-format.js';
+import { currentDate } from '../../script/utils/date-format.js';
+import { deliveryOptions } from '../../data/delivery-options.js';
 
 const cartList = document.querySelector('.cart-summary');
 
-let matchingProduct;
-let cartProducts = '';
+let generateHTML = ''
 
-if (!cart) {
-  cartList.innerHTML = `
-  <div class="cart-summary">
-    <p>Your cart is empty</p>
-    <button>View Products</button>
-  </div>
-`;
+
+if (!cart || cart.length < 1) {
+  localStorage.removeItem('cart')
+  generateHTML =
+    `
+  <div>Cart is Empty</div>
+  <button><a href='main.html'>View Products</a></button>
+  `
 } else {
+  let matchingProduct;
   cart.forEach((cartItem) => {
-    let productId = cartItem.productId;
 
     products.forEach((product) => {
-      if (product.id === productId) {
+      if (product.id === cartItem.productId) {
         matchingProduct = product;
       }
     });
 
-    let html = `
-    <div class='cart-item-${matchingProduct.id} cart-item'>
-      <div class='delivery-date date-item-${matchingProduct.id}'>
+    const { id, priceCents, name } = matchingProduct
+
+    generateHTML += `
+    <div class='cart-item-${id} cart-item'>
+      <div class='delivery-date date-item-${id}'>
       Date
       </div>
     
       <div class='cart-item-details-grid'>
           <div class='item-details'>
               <div class='item-name'>
-                  <b>${matchingProduct.name}</b>
+                  <b>${name}</b>
               </div>
               <div class='item-price'>
-                <b class="red">$${moneyFormat(matchingProduct.priceCents)}</b>
+                <b class="red">$${moneyFormat(priceCents)}</b>
               </div>
               <div class='quantity-details'>
                 <div class='item-quantity'>Quantity: ${cartItem.quantity}</div>
                 <span class='js-update-button span-button'>Update</span>
-                <span class='js-delete-button span-button' data-product-id='${matchingProduct.id}'>Delete</span>
+                <span class='js-delete-button span-button' data-product-id='${id}'>Delete</span>
               </div>
           </div>
           <div class='delivery-details'>
               <div class='js-choose-date deliveries-date'><b>Choose a delivery option</b>
-                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate()}</div></div>
-                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(1)}</div></div>
-                <div class='date-container'><input type="radio" name="delivery-option-${matchingProduct.id}"><div>${currentDate(2)}</div></div>
+                
+                ${deliveryOptionsElements(id, cartItem)}
+              
               </div>
           </div>
       </div>        
     </div>
             `;
-
-    cartProducts += html;
   });
-
-  cartList.innerHTML = cartProducts;
 }
+cartList.innerHTML = generateHTML;
 
+function deliveryOptionsElements(productId, cartItem) {
+
+  let html = ''
+
+  deliveryOptions.forEach(delivery => {
+    const { id, deliveryDays, priceCents } = delivery
+    let isChecked = cartItem.deliveryOptionId === id
+
+    html += `
+    <div class='date-container'>
+      <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
+      <div>
+        <div class='delivery-date green'><b>${currentDate(deliveryDays)}</b></div>
+        <div class='delivery-price'>$${priceCents ? moneyFormat(priceCents) : 'FREE'} - Shipping</div>
+      </div>
+    </div>
+    `
+
+  })
+
+  return html
+}
 
 
 document.querySelectorAll('.js-delete-button').forEach(button => {
@@ -73,39 +96,3 @@ document.querySelectorAll('.js-delete-button').forEach(button => {
 })
 
 
-function currentDate(dayToAdd) {
-  const weekday = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  let date = new Date();
-  if (dayToAdd) {
-    date.setDate(date.getDate() + dayToAdd);
-  }
-  let day = weekday[date.getDay()];
-  let month = months[date.getMonth()];
-  let dateFormat = `${day}, ${month} ${date.getDate()}`;
-
-  return dateFormat;
-}
