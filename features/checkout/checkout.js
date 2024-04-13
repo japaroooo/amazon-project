@@ -1,4 +1,4 @@
-import { cart, removeFromCart } from '../../data/cart.js';
+import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
 import { products } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money-format.js';
 import { currentDate } from '../../script/utils/date-format.js';
@@ -7,7 +7,6 @@ import { deliveryOptions } from '../../data/delivery-options.js';
 const cartList = document.querySelector('.cart-summary');
 
 let generateHTML = ''
-
 
 if (!cart || cart.length < 1) {
   localStorage.removeItem('cart')
@@ -26,12 +25,13 @@ if (!cart || cart.length < 1) {
       }
     });
 
+
     const { id, priceCents, name } = matchingProduct
 
     generateHTML += `
     <div class='cart-item-${id} cart-item'>
-      <div class='delivery-date date-item-${id}'>
-      Date
+      <div class='delivery-date js-delivery-item-${id}'>
+      Delivery Date: 
       </div>
     
       <div class='cart-item-details-grid'>
@@ -71,7 +71,7 @@ function deliveryOptionsElements(productId, cartItem) {
     let isChecked = cartItem.deliveryOptionId === id
 
     html += `
-    <div class='date-container'>
+    <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-option='${id}' data-product-date='${deliveryDays}'>
       <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
       <div>
         <div class='delivery-date green'><b>${currentDate(deliveryDays)}</b></div>
@@ -95,4 +95,10 @@ document.querySelectorAll('.js-delete-button').forEach(button => {
   })
 })
 
+document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', () => {
+  const { productId, deliveryOption, productDate } = element.dataset
 
+  updateDeliveryOption(productId, deliveryOption)
+
+  document.querySelector(`.js-delivery-item-${productId}`).innerHTML = `Delivery Date: ${currentDate(productDate)}`
+}))
