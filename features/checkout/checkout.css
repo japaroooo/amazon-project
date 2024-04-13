@@ -128,3 +128,9 @@ b.red {
    color: rgb(97, 97, 97);
    font-size: 14px;
 }
+
+.delivery-date-title {
+   margin-bottom: 10px;
+   font-weight: 500;
+   font-size: 20px;
+}

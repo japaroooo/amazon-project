@@ -25,13 +25,19 @@ if (!cart || cart.length < 1) {
       }
     });
 
+    let dateString = ''
+    deliveryOptions.forEach(delivery => {
+      if (delivery.id == cartItem.deliveryOptionId) {
+        dateString = currentDate(delivery.deliveryDays)
+      }
+    })
 
     const { id, priceCents, name } = matchingProduct
 
     generateHTML += `
     <div class='cart-item-${id} cart-item'>
-      <div class='delivery-date js-delivery-item-${id}'>
-      Delivery Date: 
+      <div class='delivery-date-title js-delivery-item-${id}'>
+      Delivery Date: ${dateString}
       </div>
     
       <div class='cart-item-details-grid'>
