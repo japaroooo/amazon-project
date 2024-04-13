@@ -6,37 +6,39 @@ import { deliveryOptions } from '../../data/delivery-options.js';
 
 const cartList = document.querySelector('.cart-summary');
 
-let generateHTML = ''
 
-if (!cart || cart.length < 1) {
-  localStorage.removeItem('cart')
-  generateHTML =
-    `
+function renderOrderSummary() {
+  let generateHTML = ''
+
+  if (!cart || cart.length < 1) {
+    localStorage.removeItem('cart')
+    generateHTML =
+      `
   <div>Cart is Empty</div>
   <button><a href='main.html'>View Products</a></button>
   `
-} else {
-  let matchingProduct;
-  cart.forEach((cartItem) => {
+  } else {
+    let matchingProduct;
+    cart.forEach((cartItem) => {
 
-    products.forEach((product) => {
-      if (product.id === cartItem.productId) {
-        matchingProduct = product;
-      }
-    });
+      products.forEach((product) => {
+        if (product.id === cartItem.productId) {
+          matchingProduct = product;
+        }
+      });
 
-    let dateString = ''
-    deliveryOptions.forEach(delivery => {
-      if (delivery.id == cartItem.deliveryOptionId) {
-        dateString = currentDate(delivery.deliveryDays)
-      }
-    })
+      let dateString = ''
+      deliveryOptions.forEach(delivery => {
+        if (delivery.id == cartItem.deliveryOptionId) {
+          dateString = currentDate(delivery.deliveryDays)
+        }
+      })
 
-    const { id, priceCents, name } = matchingProduct
+      const { id, priceCents, name } = matchingProduct
 
-    generateHTML += `
+      generateHTML += `
     <div class='cart-item-${id} cart-item'>
-      <div class='delivery-date-title js-delivery-item-${id}'>
+      <div class='delivery-date-title  js-delivery-item-${id}'>
       Delivery Date: ${dateString}
       </div>
     
@@ -64,19 +66,19 @@ if (!cart || cart.length < 1) {
       </div>        
     </div>
             `;
-  });
-}
-cartList.innerHTML = generateHTML;
+    });
+  }
+  cartList.innerHTML = generateHTML;
 
-function deliveryOptionsElements(productId, cartItem) {
+  function deliveryOptionsElements(productId, cartItem) {
 
-  let html = ''
+    let html = ''
 
-  deliveryOptions.forEach(delivery => {
-    const { id, deliveryDays, priceCents } = delivery
-    let isChecked = cartItem.deliveryOptionId === id
+    deliveryOptions.forEach(delivery => {
+      const { id, deliveryDays, priceCents } = delivery
+      let isChecked = cartItem.deliveryOptionId === id
 
-    html += `
+      html += `
     <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-option='${id}' data-product-date='${deliveryDays}'>
       <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
       <div>
@@ -86,25 +88,26 @@ function deliveryOptionsElements(productId, cartItem) {
     </div>
     `
 
+    })
+
+    return html
+  }
+
+
+  document.querySelectorAll('.js-delete-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const { productId } = button.dataset
+
+      removeFromCart(productId)
+      document.querySelector(`.cart-item-${productId}`).remove()
+    })
   })
 
-  return html
+  document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', () => {
+    const { productId, deliveryOption, productDate } = element.dataset
+
+    updateDeliveryOption(productId, deliveryOption)
+    renderOrderSummary()
+  }))
 }
-
-
-document.querySelectorAll('.js-delete-button').forEach(button => {
-  button.addEventListener('click', () => {
-    const { productId } = button.dataset
-
-    removeFromCart(productId)
-    document.querySelector(`.cart-item-${productId}`).remove()
-  })
-})
-
-document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', () => {
-  const { productId, deliveryOption, productDate } = element.dataset
-
-  updateDeliveryOption(productId, deliveryOption)
-
-  document.querySelector(`.js-delivery-item-${productId}`).innerHTML = `Delivery Date: ${currentDate(productDate)}`
-}))
+renderOrderSummary()
