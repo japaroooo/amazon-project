@@ -35,7 +35,7 @@ function updateCartQuantity() {
     cartQuantity += +cartItem.quantity;
   });
 
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  return cartQuantity
 }
 
 function removeFromCart(productId) {

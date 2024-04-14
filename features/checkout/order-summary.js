@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.mjs';
+import { cart, removeFromCart, updateDeliveryOption, updateCartQuantity } from '../../data/cart.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money-format.js';
 import { currentDate } from '../../script/utils/date-format.js';
@@ -9,6 +9,7 @@ const cartList = document.querySelector('.cart-summary');
 
 
 export function renderOrderSummary() {
+  document.querySelector('.middle-section').innerHTML = `Checkout (${updateCartQuantity()} items)`
   let generateHTML = ''
 
   if (!cart || cart.length < 1) {
@@ -45,7 +46,7 @@ export function renderOrderSummary() {
                     </div>
                     <div class='quantity-details'>
                       <div class='item-quantity'>Quantity: ${cartItem.quantity}</div>
-                      <span class='js-update-button span-button'>Update</span>
+                      <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
                       <span class='js-delete-button span-button' data-product-id='${id}'>Delete</span>
                     </div>
                 </div>
@@ -86,6 +87,11 @@ export function renderOrderSummary() {
     return html
   }
 
+  document.querySelectorAll('.js-update-button').forEach(button => {
+    button.addEventListener('click', () => {
+
+    })
+  })
 
   document.querySelectorAll('.js-delete-button').forEach(button => {
     button.addEventListener('click', () => {
@@ -94,7 +100,7 @@ export function renderOrderSummary() {
       removeFromCart(productId)
       document.querySelector(`.cart-item-${productId}`).remove()
 
-
+      renderOrderSummary()
       renderPaymentSummary()  // Render payment summary to update total items price
     })
   })
