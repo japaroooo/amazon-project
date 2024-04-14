@@ -133,4 +133,10 @@ b.red {
    margin-bottom: 10px;
    font-weight: 500;
    font-size: 20px;
+   color: green;
+}
+
+.payment-summary div {
+   display: flex;
+   justify-content: space-between;
 }
