@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption, updateCartQuantity } from '../../data/cart.mjs';
+import { cart, removeFromCart, updateCartQuantity, calculateCartQuantity, updateDeliveryOption } from '../../data/cart.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money-format.js';
 import { currentDate } from '../../script/utils/date-format.js';
@@ -6,7 +6,6 @@ import { deliveryOptions, getDeliveryOption } from '../../data/delivery-options.
 import { renderPaymentSummary } from './payment-summary.js';
 
 const cartList = document.querySelector('.cart-summary');
-
 
 export function renderOrderSummary() {
   document.querySelector('.middle-section').innerHTML = `Checkout (${updateCartQuantity()} items)`
@@ -16,9 +15,9 @@ export function renderOrderSummary() {
     localStorage.removeItem('cart')
     generateHTML =
       `
-  <div>Cart is Empty</div>
-  <button><a href='main.html'>View Products</a></button>
-  `
+        <div>Cart is Empty</div>
+        <button><a href='main.html'>View Products</a></button>
+      `
   } else {
     cart.forEach((cartItem) => {
 
@@ -44,10 +43,8 @@ export function renderOrderSummary() {
                     <div class='item-price'>
                       <b class="red">$${moneyFormat(priceCents)}</b>
                     </div>
-                    <div class='quantity-details'>
-                      <div class='item-quantity'>Quantity: ${cartItem.quantity}</div>
-                      <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
-                      <span class='js-delete-button span-button' data-product-id='${id}'>Delete</span>
+                    <div class='quantity-container quantity-details-${id}'>
+                      ${quantityElement(cartItem.quantity, id)}
                     </div>
                 </div>
                 <div class='delivery-details'>
@@ -72,23 +69,56 @@ export function renderOrderSummary() {
       const { id, deliveryDays, priceCents } = delivery
       let isChecked = cartItem.deliveryOptionId === id
 
-      html += `
-    <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-id='${id}' >
-      <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
-      <div>
-        <div class='delivery-date green'><b>${currentDate(deliveryDays)}</b></div>
-        <div class='delivery-price'>$${priceCents ? moneyFormat(priceCents) : 'FREE'} - Shipping</div>
-      </div>
-    </div>
-    `
-
+      html +=
+        `
+          <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-id='${id}' >
+            <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
+            <div>
+              <div class='delivery-date green'><b>${currentDate(deliveryDays)}</b></div>
+              <div class='delivery-price'>$${priceCents ? moneyFormat(priceCents) : 'FREE'} - Shipping</div>
+            </div>
+          </div>
+        `
     })
 
     return html
   }
 
+  function quantityElement(quantity, id) {
+    let html =
+      `
+        <div class='item-quantity-${id}'>Quantity: ${quantity}</div>
+        <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
+        <span class='js-delete-button span-button' data-product-id='${id}'>Delete</span>
+      `
+    return html
+  }
+
   document.querySelectorAll('.js-update-button').forEach(button => {
     button.addEventListener('click', () => {
+      const { productId } = button.dataset
+
+      // console.log(productId);
+      const quantityHTML = document.querySelector(`.quantity-details-${productId}`)
+
+      quantityHTML.innerHTML =
+        `
+        Quantity: 
+        <input type='text' class='js-input-value'>
+        <span class='js-save-button span-button' data-product-id='${productId}'>Save</span>
+        `
+
+      document.querySelector('.js-save-button').addEventListener('click', () => {
+        let inputValue = quantityHTML.children[0].value
+
+        if (!inputValue || inputValue < 1) inputValue = 1
+
+        quantityHTML.innerHTML = quantityElement(inputValue, productId)
+        calculateCartQuantity(inputValue, productId)
+
+        renderOrderSummary()
+        renderPaymentSummary()
+      })
 
     })
   })
@@ -106,13 +136,15 @@ export function renderOrderSummary() {
   })
 
 
-  document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', () => {
+  document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', (e) => {
+    // e.preventDefault()
     const { productId, deliveryId } = element.dataset
 
     updateDeliveryOption(productId, deliveryId)
 
     renderOrderSummary()
-    renderPaymentSummary()  // Render payment summary to update shipping fee
+    renderPaymentSummary()  // Render payxent summary to update shipping fee
   }))
 }
-renderOrderSummary()
+
+// renderOrderSummary()

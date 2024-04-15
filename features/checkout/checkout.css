@@ -44,6 +44,10 @@ main {
    max-width: 70%;
 }
 
+input[type='text'] {
+   width: 5%;
+}
+
 section {
    display: grid;
    grid-template-columns: 1fr 30%;
@@ -111,7 +115,7 @@ b.red {
    color: green;
 }
 
-.quantity-details {
+.quantity-container {
    display: flex;
    gap: 15px;
 }
@@ -136,7 +140,50 @@ b.red {
    color: green;
 }
 
-.payment-summary div {
+.payment-summary {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.payment-summary-row {
    display: flex;
    justify-content: space-between;
+   font-size: 15px;
+}
+
+.payment-summary-row div:nth-child(2) {
+   letter-spacing: 1px;
+}
+
+.shipping-price,
+.estimated-tax,
+.payment-title {
+   padding-bottom: 10px;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.321);
+}
+
+.place-order-button {
+   padding: 7px;
+   border-radius: 7px;
+   cursor: pointer;
+   font-size: 1.15rem;
+   letter-spacing: 2px;
+   margin-top: 5px;
+   color: white;
+   background: var(--primary-color);
+   border: none;
+
+   /* transition: all 0.5s ease-in; */
+}
+
+.place-order-button:hover {
+   color: rgba(0, 0, 0, 0.658);
+   animation: left-to-right 1s linear;
+}
+
+@keyframes left-to-right {
+   100% {
+      background: gold;
+   }
 }

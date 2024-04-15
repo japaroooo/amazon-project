@@ -38,6 +38,18 @@ function updateCartQuantity() {
   return cartQuantity
 }
 
+function calculateCartQuantity(inputValue, productId) {
+  const newQuantity = inputValue
+
+  cart.forEach(cartItem => {
+    if (productId === cartItem.productId) {
+      cartItem.quantity = newQuantity
+    }
+  })
+
+  saveToStorage()
+}
+
 function removeFromCart(productId) {
   let newCart = []
 
@@ -66,4 +78,4 @@ function updateDeliveryOption(productId, deliveryOptId) {
   // document.querySelector(`.js-delivery-item-${productId}`).innerHTML = matchingProduct.
 }
 
-export { cart, addToCart, updateCartQuantity, updateDeliveryOption, removeFromCart }
+export { cart, addToCart, updateCartQuantity, updateDeliveryOption, removeFromCart, calculateCartQuantity }
