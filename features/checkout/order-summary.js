@@ -1,14 +1,15 @@
 import { cart, removeFromCart, updateCartQuantity, calculateCartQuantity, updateDeliveryOption } from '../../data/cart.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money-format.js';
-import { currentDate } from '../../script/utils/date-format.js';
+import { calculateDeliveryDate, isWeekend } from '../../script/utils/date-format.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/delivery-options.mjs';
 import { renderPaymentSummary } from './payment-summary.js';
+import { renderHeader } from './checkoutHeader.js';
+
 
 const cartList = document.querySelector('.cart-summary');
 
 export function renderOrderSummary() {
-  document.querySelector('.middle-section').innerHTML = `Checkout (${updateCartQuantity()} items)`
   let generateHTML = ''
 
   if (!cart || cart.length < 1) {
@@ -32,7 +33,7 @@ export function renderOrderSummary() {
         `
           <div class='cart-item-${id} cart-item'>
             <div class='delivery-date-title  js-delivery-item-${id}'>
-            Delivery Date: ${currentDate(deliveryOption.deliveryDays)}
+            Delivery Date: ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
             </div>
           
             <div class='cart-item-details-grid'>
@@ -61,29 +62,39 @@ export function renderOrderSummary() {
   }
   cartList.innerHTML = generateHTML;
 
+
+  /**
+ * * Delivery Option element
+ */
   function deliveryOptionsElements(productId, cartItem) {
-
     let html = ''
-
     deliveryOptions.forEach(delivery => {
-      const { id, deliveryDays, priceCents } = delivery
+      let { id, deliveryDays, priceCents } = delivery
       let isChecked = cartItem.deliveryOptionId === id
+
+      const deliveryDate = calculateDeliveryDate(deliveryDays)
+      const isSatSun = isWeekend(deliveryDate.dateToday)
+
 
       html +=
         `
           <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-id='${id}' >
-            <input type="radio" name="delivery-option-${productId}" ${isChecked ? 'checked' : ''}>
+            <input type="radio" name="delivery-option-${productId}" ${isChecked && 'checked'}>
             <div>
-              <div class='delivery-date green'><b>${currentDate(deliveryDays)}</b></div>
+              <div class='delivery-date green'><b>${deliveryDate.dateString}</b></div>
               <div class='delivery-price'>$${priceCents ? moneyFormat(priceCents) : 'FREE'} - Shipping</div>
+             ${isSatSun ? '<div class="red-text">No delivery for weekends</div>' : '<div> </div>'}
             </div>
           </div>
         `
     })
-
+    //  
     return html
   }
 
+  /**
+   * * Quantity update element 
+   */
   function quantityElement(quantity, id) {
     let html =
       `
@@ -94,6 +105,10 @@ export function renderOrderSummary() {
     return html
   }
 
+
+  /**
+   * * Update Quantity input
+   */
   document.querySelectorAll('.js-update-button').forEach(button => {
     button.addEventListener('click', () => {
       const { productId } = button.dataset
@@ -123,19 +138,25 @@ export function renderOrderSummary() {
     })
   })
 
+  /**
+   * * Delete Product click
+   */
   document.querySelectorAll('.js-delete-button').forEach(button => {
     button.addEventListener('click', () => {
       const { productId } = button.dataset
 
       removeFromCart(productId)
-      document.querySelector(`.cart-item-${productId}`).remove()
+      // document.querySelector(`.cart-item-${productId}`).remove()
 
+      renderHeader()
       renderOrderSummary()
       renderPaymentSummary()  // Render payment summary to update total items price
     })
   })
 
-
+  /**
+   * * Delivery Option changes
+   */
   document.querySelectorAll('.js-delivery-option').forEach(element => element.addEventListener('change', (e) => {
     // e.preventDefault()
     const { productId, deliveryId } = element.dataset

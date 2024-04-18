@@ -107,7 +107,8 @@ section {
    gap: 10px;
 }
 
-b.red {
+b.red,
+.red-text {
    color: red;
 }
 
@@ -167,23 +168,15 @@ b.red {
    padding: 7px;
    border-radius: 7px;
    cursor: pointer;
-   font-size: 1.15rem;
-   letter-spacing: 2px;
    margin-top: 5px;
    color: white;
    background: var(--primary-color);
    border: none;
 
-   /* transition: all 0.5s ease-in; */
+   transition: all 0.5s ease-in;
 }
 
 .place-order-button:hover {
    color: rgba(0, 0, 0, 0.658);
-   animation: left-to-right 1s linear;
-}
-
-@keyframes left-to-right {
-   100% {
-      background: gold;
-   }
+   background-color: rgba(255, 223, 41, 0.796)
 }
