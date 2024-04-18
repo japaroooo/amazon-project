@@ -1,4 +1,4 @@
-import { cart } from '../../data/cart.mjs';
+import { cart, updateCartQuantity } from '../../data/cart.mjs';
 import { getDeliveryOption } from '../../data/delivery-options.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money-format.js';
@@ -28,7 +28,7 @@ function renderPaymentSummary() {
          </div>
 
          <div class='payment-summary-row'>
-            <div>Items:</div>
+            <div>Items (${updateCartQuantity()}):</div>
             <div>$ ${moneyFormat(itemsPrice)}</div>
          </div>
 
