@@ -18,3 +18,4 @@ function testFunction(funcToTest = new Function(), expectedValue, message) {
       console.error('FAILED');
    }
 }
+
