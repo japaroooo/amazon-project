@@ -37,7 +37,7 @@ function renderProducts() {
       const { productId } = button.dataset;
       const itemQuantity = document.querySelector(`.js-quantity-selector-${productId}`);
 
-      addToCart(itemQuantity, productId);
+      addToCart(itemQuantity.value, productId);
       showAddCheck(index);
       document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity()
 

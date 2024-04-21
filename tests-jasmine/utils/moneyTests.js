@@ -1,4 +1,4 @@
-import moneyFormat from '../script/utils/money-format.js';
+import moneyFormat from '../../script/utils/money.js';
 
 
 describe('Test Suite: Money format', () => {
