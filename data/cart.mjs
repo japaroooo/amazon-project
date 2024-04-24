@@ -1,7 +1,5 @@
 let cart
 
-const cartList = document.querySelector('.cart-summary')
-
 loadFromStorage()
 
 function loadFromStorage() {
@@ -73,7 +71,6 @@ function removeFromCart(productId) {
       newCart.push(item)
     }
   })
-
   cart = newCart
   saveToStorage()
 }

@@ -1,11 +1,12 @@
 import { cart, updateCartQuantity } from '../../data/cart.mjs';
 import { getDeliveryOption } from '../../data/delivery-options.mjs';
 import { getProduct } from '../../data/products.js';
-import moneyFormat from '../../script/utils/money-format.js';
+import moneyFormat from '../../script/utils/money.js';
 
-const paymentSummary = document.querySelector('.payment-summary')
+// renderPaymentSummary()
 
-function renderPaymentSummary() {
+export function renderPaymentSummary() {
+   let generateHtml = ''
    let itemsPrice = 0
    let shippingFee = 0
 
@@ -21,7 +22,7 @@ function renderPaymentSummary() {
    const estimatedTax = totalBeforeTax * 0.1
    const totalPrice = totalBeforeTax + estimatedTax
 
-   let html =
+   generateHtml +=
       `
          <div class="payment-summary-row">
             <b class='payment-title'>Order Summary</b>
@@ -55,15 +56,5 @@ function renderPaymentSummary() {
          <button class='place-order-button'>Place Order</button>       
          `
 
-   // document.querySelector('.items-price').innerHTML = `$${moneyFormat(itemsPrice)}`
-   // document.querySelector('.shipping-price').innerHTML = shippingFee ? `$${moneyFormat(shippingFee)}` : 'Free'
-   // document.querySelector('.total-tax').innerHTML = `$${moneyFormat(totalBeforeTax)}`
-   // document.querySelector('.estimated-tax').innerHTML = `$${moneyFormat(estimatedTax)}`
-   // document.querySelector('.total-price').innerHTML = `$${moneyFormat(totalPrice)}`
-
-   paymentSummary.innerHTML = html
+   document.querySelector('.js-payment-summary').innerHTML = generateHtml
 }
-
-renderPaymentSummary()
-
-export { renderPaymentSummary }

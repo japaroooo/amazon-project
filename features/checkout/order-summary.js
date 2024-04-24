@@ -1,39 +1,28 @@
 import { cart, removeFromCart, updateCartQuantity, calculateCartQuantity, updateDeliveryOption } from '../../data/cart.mjs';
 import { getProduct } from '../../data/products.js';
-import moneyFormat from '../../script/utils/money-format.js';
+import moneyFormat from '../../script/utils/money.js';
 import { calculateDeliveryDate, isWeekend } from '../../script/utils/date-format.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/delivery-options.mjs';
 import { renderPaymentSummary } from './payment-summary.js';
 import { renderHeader } from './checkoutHeader.js';
 
-
-const cartList = document.querySelector('.cart-summary');
-
 export function renderOrderSummary() {
   let generateHTML = ''
 
-  if (!cart || cart.length < 1) {
-    localStorage.removeItem('cart')
-    generateHTML =
+  cart.forEach((cartItem) => {
+
+    const { productId, deliveryOptionId } = cartItem
+
+    const matchingProduct = getProduct(productId);
+    const deliveryOption = getDeliveryOption(deliveryOptionId)
+
+    const { id, priceCents, name } = matchingProduct
+
+    generateHTML +=
       `
-        <div>Cart is Empty</div>
-        <button><a href='main.html'>View Products</a></button>
-      `
-  } else {
-    cart.forEach((cartItem) => {
-
-      const { productId, deliveryOptionId } = cartItem
-
-      const matchingProduct = getProduct(productId);
-      const deliveryOption = getDeliveryOption(deliveryOptionId)
-
-      const { id, priceCents, name } = matchingProduct
-
-      generateHTML +=
-        `
-          <div class='cart-item-${id} cart-item'>
-            <div class='delivery-date-title  js-delivery-item-${id}'>
-            Delivery Date: ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
+          <div class='cart-item-${id} js-cart-item cart-item'>
+            <div class='delivery-date-title js-delivery-item-${id}'>
+             Delivery Date: ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
             </div>
           
             <div class='cart-item-details-grid'>
@@ -45,7 +34,9 @@ export function renderOrderSummary() {
                       <b class="red">$${moneyFormat(priceCents)}</b>
                     </div>
                     <div class='quantity-container quantity-details-${id}'>
-                      ${quantityElement(cartItem.quantity, id)}
+                      <div class='item-quantity-${id}'>Quantity: ${cartItem.quantity}</div>
+                      <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
+                      <span class='js-delete-button js-delete-link-${id} span-button' data-product-id='${id}'>Delete</span>
                     </div>
                 </div>
                 <div class='delivery-details'>
@@ -58,14 +49,15 @@ export function renderOrderSummary() {
             </div>        
           </div>
        `
-    });
-  }
-  cartList.innerHTML = generateHTML;
+  });
+
+  document.querySelector('.js-cart-summary').innerHTML = generateHTML;
+
 
 
   /**
- * * Delivery Option element
- */
+  * * Delivery Option element
+  */
   function deliveryOptionsElements(productId, cartItem) {
     let html = ''
     deliveryOptions.forEach(delivery => {
@@ -91,20 +83,6 @@ export function renderOrderSummary() {
     //  
     return html
   }
-
-  /**
-   * * Quantity update element 
-   */
-  function quantityElement(quantity, id) {
-    let html =
-      `
-        <div class='item-quantity-${id}'>Quantity: ${quantity}</div>
-        <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
-        <span class='js-delete-button span-button' data-product-id='${id}'>Delete</span>
-      `
-    return html
-  }
-
 
   /**
    * * Update Quantity input
@@ -148,7 +126,6 @@ export function renderOrderSummary() {
       removeFromCart(productId)
       // document.querySelector(`.cart-item-${productId}`).remove()
 
-      renderHeader()
       renderOrderSummary()
       renderPaymentSummary()  // Render payment summary to update total items price
     })
@@ -166,6 +143,7 @@ export function renderOrderSummary() {
     renderOrderSummary()
     renderPaymentSummary()  // Render payxent summary to update shipping fee
   }))
+
 }
 
 // renderOrderSummary()

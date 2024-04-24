@@ -1,6 +1,5 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-const weekday = window.dayjs_plugin_weekday
-dayjs.extend(weekday)
+dayjs.extend(window.dayjs_plugin_weekday)
 
 function isWeekend(date) {
    const format = date.format('dddd')

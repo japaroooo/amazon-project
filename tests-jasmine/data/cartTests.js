@@ -1,5 +1,6 @@
 import { cart, addToCart, loadFromStorage } from '../../data/cart.mjs';
 
+
 describe('Test Suite: Add to cart', () => {
 
    it('Add new products from the catalog', () => {
@@ -11,7 +12,6 @@ describe('Test Suite: Add to cart', () => {
 
       loadFromStorage()
 
-      console.log(cart);
 
       addToCart(1, 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
       expect(cart.length).toEqual(1)

@@ -13,4 +13,5 @@ function renderHeader() {
    document.querySelector('.checkout-header').innerHTML = html
 }
 
+
 export { renderHeader }

@@ -62,11 +62,11 @@ section {
 }
 
 .summary,
-.payment-summary {
+.js-payment-summary {
    gap: calc(5px + 1vh);
 }
 
-.payment-summary,
+.js-payment-summary,
 .cart-item {
    border: 1px solid rgba(0, 0, 0, 0.155);
    border-radius: 10px;
@@ -82,14 +82,14 @@ section {
    margin-bottom: 10px;
 }
 
-.cart-summary,
+.js-cart-summary,
 .item-details {
    display: flex;
    flex-direction: column;
    gap: 10px;
 }
 
-.cart-summary button,
+.js-cart-summary button,
 .span-button {
    width: fit-content;
    cursor: pointer;
@@ -141,7 +141,7 @@ b.red,
    color: green;
 }
 
-.payment-summary {
+.js-payment-summary {
    display: flex;
    flex-direction: column;
    gap: 10px;
