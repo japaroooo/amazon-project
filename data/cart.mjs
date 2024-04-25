@@ -78,16 +78,17 @@ function removeFromCart(productId) {
 function updateDeliveryOption(productId, deliveryOptId) {
   let matchingProduct = ''
 
+
   cart.forEach((product) => {
     if (product.productId === productId) {
       matchingProduct = product;
     }
   });
 
-  matchingProduct.deliveryOptionId = deliveryOptId
+  if (!matchingProduct) return
 
+  matchingProduct.deliveryOptionId = deliveryOptId
   saveToStorage()
-  // document.querySelector(`.js-delivery-item-${productId}`).innerHTML = matchingProduct.
 }
 
 export { cart, addToCart, updateCartQuantity, updateDeliveryOption, removeFromCart, calculateCartQuantity, loadFromStorage }

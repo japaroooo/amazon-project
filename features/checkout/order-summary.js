@@ -21,8 +21,9 @@ export function renderOrderSummary() {
     generateHTML +=
       `
           <div class='cart-item-${id} js-cart-item cart-item'>
+            <span>Delivery Date:</span>
             <div class='delivery-date-title js-delivery-item-${id}'>
-             Delivery Date: ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
+            ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
             </div>
           
             <div class='cart-item-details-grid'>
@@ -60,6 +61,9 @@ export function renderOrderSummary() {
   */
   function deliveryOptionsElements(productId, cartItem) {
     let html = ''
+
+
+
     deliveryOptions.forEach(delivery => {
       let { id, deliveryDays, priceCents } = delivery
       let isChecked = cartItem.deliveryOptionId === id
@@ -70,8 +74,8 @@ export function renderOrderSummary() {
 
       html +=
         `
-          <div class='date-container js-delivery-option' data-product-id='${productId}' data-delivery-id='${id}' >
-            <input type="radio" name="delivery-option-${productId}" ${isChecked && 'checked'}>
+          <div class='date-container js-delivery-option js-product-id-${productId} js-delivery-id-${id}' data-product-id='${productId}' data-delivery-id='${id}' >
+            <input type="radio" ${isChecked ? 'checked' : ''}>
             <div>
               <div class='delivery-date green'><b>${deliveryDate.dateString}</b></div>
               <div class='delivery-price'>$${priceCents ? moneyFormat(priceCents) : 'FREE'} - Shipping</div>

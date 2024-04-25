@@ -40,17 +40,17 @@ export function renderPaymentSummary() {
 
          <div class='payment-summary-row'>
             <div>Total before tax:</div>
-            <div>$ ${moneyFormat(totalBeforeTax)}</div>
+            <span>$ </span><div class='total-before-tax'>${moneyFormat(totalBeforeTax)}</div>
          </div>
 
          <div class='payment-summary-row'>
             <div>Estimated tax:</div>
-            <div class='estimated-tax'>$ ${moneyFormat(estimatedTax)}</div>
+            <span>$ </span><div class='estimated-tax'>${moneyFormat(estimatedTax)}</div>
          </div>
 
          <div class='payment-summary-row'>
             <div><b>Total Price:</b></div>
-            <div><b>$ ${moneyFormat(totalPrice)} </b></div>
+            <span>$ </span><div class='total-price'><b>${moneyFormat(totalPrice)} </b></div>
          </div>
 
          <button class='place-order-button'>Place Order</button>       

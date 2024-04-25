@@ -1,4 +1,5 @@
 import { loadFromStorage, cart } from '../../data/cart.mjs';
+
 import { renderOrderSummary } from '../../features/checkout/order-summary.js';
 
 describe('Test Suite: Order Summary', () => {
@@ -6,10 +7,13 @@ describe('Test Suite: Order Summary', () => {
    const product2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d'
 
    beforeEach(() => {
+
+      spyOn(localStorage, 'setItem')
+
       document.querySelector('.js-test-container').innerHTML =
          `
-         <div class='js-cart-summary'></div>
-         <div class='js-payment-summary'></div>
+            <div class='js-cart-summary'></div>
+            <div class='js-payment-summary'></div>
          `
 
       spyOn(localStorage, 'getItem').and.callFake(() => {
@@ -21,17 +25,21 @@ describe('Test Suite: Order Summary', () => {
          }])
       })
 
+
       loadFromStorage()
       renderOrderSummary()
+
+      // expect(localStorage.setItem).toHaveBeenCalledTimes(1)
+
    })
 
    afterAll(() => {
+      console.log(localStorage);
       document.querySelector('.js-test-container').innerHTML = ''
    })
 
 
    it('loads the cart products visually', () => {
-
 
       expect(document.querySelectorAll(`.js-cart-item`).length)
          .toEqual(2)
@@ -55,5 +63,33 @@ describe('Test Suite: Order Summary', () => {
       expect(document.querySelector(`.cart-item-${product1}`)).toBeNull()
 
       expect(cart[0].productId).toEqual(product2)
+
+
+      expect(
+         localStorage.setItem
+      ).toHaveBeenCalledWith(
+         'cart', JSON.stringify([{
+            quantity: 1,
+            productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+            deliveryOptionId: '2'
+         }])
+      )
    })
-})
+
+   it('displays correct name', () => {
+
+      expect(
+         document.querySelectorAll('.item-name')[0].innerText
+      ).toBe(
+         'Adults Plain Cotton T-Shirt - 2 Pack'
+      )
+
+      expect(
+         document.querySelectorAll('.item-price')[0].innerText
+      ).toBe(
+         '$7.99'
+      )
+   })
+
+
+}) 
