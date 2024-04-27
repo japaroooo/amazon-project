@@ -14,7 +14,7 @@ function renderProducts() {
               <div> Star: ${product.rating.stars} </div>
               <div> Rating: ${product.rating.count} </div>
               </div>
-              <div class='product-price'>$${moneyFormat(product.priceCents)}</div>
+              <div class='product-price'>${product.getPrice()}</div>
               
               <select class='js-quantity-selector-${product.id}'>
                   <option selected value='1'>1</option>

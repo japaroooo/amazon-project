@@ -16,35 +16,41 @@ export function renderOrderSummary() {
     const matchingProduct = getProduct(productId);
     const deliveryOption = getDeliveryOption(deliveryOptionId)
 
-    const { id, priceCents, name } = matchingProduct
-
     generateHTML +=
       `
-          <div class='cart-item-${id} js-cart-item cart-item'>
+          <div class='cart-item-${matchingProduct.id} js-cart-item cart-item'>
             <span>Delivery Date:</span>
-            <div class='delivery-date-title js-delivery-item-${id}'>
-            ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
+            <div class='delivery-date-title js-delivery-item-${matchingProduct.id}'>
+               ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
             </div>
           
             <div class='cart-item-details-grid'>
                 <div class='item-details'>
                     <div class='item-name'>
-                        <b>${name}</b>
+                        <b>${matchingProduct.name}</b>
                     </div>
                     <div class='item-price'>
-                      <b class="red">$${moneyFormat(priceCents)}</b>
+                        <b class="red">${matchingProduct.getPrice()}</b>
                     </div>
-                    <div class='quantity-container quantity-details-${id}'>
-                      <div class='item-quantity-${id}'>Quantity: ${cartItem.quantity}</div>
-                      <span class='js-update-button span-button' data-product-id='${id}'>Update</span>
-                      <span class='js-delete-button js-delete-link-${id} span-button' data-product-id='${id}'>Delete</span>
+                    <div class='quantity-container quantity-details-${matchingProduct.id}'>
+
+                        <div class='item-quantity-${matchingProduct.id}'>
+                          Quantity: ${cartItem.quantity}
+                        </div>
+
+                        <span class='js-update-button span-button' data-product-id='${matchingProduct.id}'>
+                          Update
+                        </span>
+
+                        <span class='js-delete-button js-delete-link-${matchingProduct.id} span-button' data-product-id='${matchingProduct.id}'>
+                          Delete
+                        </span>
+
                     </div>
                 </div>
                 <div class='delivery-details'>
                     <div class='js-choose-date deliveries-date'><b>Choose a delivery option</b>
-                      
-                      ${deliveryOptionsElements(id, cartItem)}
-                    
+                      ${deliveryOptionsElements(matchingProduct.id, cartItem)}
                     </div>
                 </div>
             </div>        

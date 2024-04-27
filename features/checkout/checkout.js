@@ -2,7 +2,7 @@ import { renderOrderSummary } from './order-summary.js';
 import { renderPaymentSummary } from './payment-summary.js';
 import { renderHeader } from './checkoutHeader.js';
 
-import '../../data/cart-class.js'
+// import '../../data/cart-class.js'
 
 
 renderHeader()

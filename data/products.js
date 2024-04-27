@@ -1,3 +1,4 @@
+import moneyFormat from '../script/utils/money.js';
 
 
 export { products, getProduct }
@@ -12,6 +13,26 @@ function getProduct(productId) {
   });
 
   return matchingProduct
+}
+
+class Product {
+  id
+  image
+  name
+  rating
+  priceCents
+
+  constructor(productDetails) {
+    this.id = productDetails.id
+    this.name = productDetails.name
+    this.image = productDetails.image
+    this.rating = productDetails.rating
+    this.priceCents = productDetails.priceCents
+  }
+
+  getPrice() {
+    return `$${moneyFormat(this.priceCents)}`
+  }
 }
 
 const products = [
@@ -485,4 +506,8 @@ const products = [
     priceCents: 2400,
     keywords: ['sweaters', 'hoodies', 'apparel', 'mens'],
   },
-];
+].map(productDetail => {
+  return new Product(productDetail)
+});
+
+console.log(products);
