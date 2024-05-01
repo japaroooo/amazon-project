@@ -1,16 +1,16 @@
-import { cart, updateCartQuantity } from '../../data/cart.mjs';
+import cart from '../../data/cart-class.js'
 import { getDeliveryOption } from '../../data/delivery-options.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money.js';
 
-// renderPaymentSummary()
+renderPaymentSummary()
 
 export function renderPaymentSummary() {
    let generateHtml = ''
    let itemsPrice = 0
    let shippingFee = 0
 
-   cart.forEach((cartItem) => {
+   cart.cartItems.forEach((cartItem) => {
       const matchingProduct = getProduct(cartItem.productId)
       itemsPrice += (cartItem.quantity * (matchingProduct.priceCents))
 
@@ -29,28 +29,36 @@ export function renderPaymentSummary() {
          </div>
 
          <div class='payment-summary-row'>
-            <div>Items (${updateCartQuantity()}):</div>
-            <div>$ ${moneyFormat(itemsPrice)}</div>
+            <div>Items (${cart.updateCartQuantity()}):</div>
+            <div>$${moneyFormat(itemsPrice)}</div>
          </div>
 
          <div class='payment-summary-row'>
             <div>Shipping & handling:</div>
-            <div class='shipping-price'> ${shippingFee ? '$' + moneyFormat(shippingFee) : 'Free'}</div> 
+            <div>
+               <div class='shipping-price'> ${shippingFee ? '$' + moneyFormat(shippingFee) : 'Free'}</div> 
+            </div>
          </div>
 
          <div class='payment-summary-row'>
             <div>Total before tax:</div>
-            <span>$</span><div class='total-before-tax'>${moneyFormat(totalBeforeTax)}</div>
+            <div>
+               $<div class='total-before-tax'>${moneyFormat(totalBeforeTax)}</div>
+            </div>
          </div>
 
          <div class='payment-summary-row'>
             <div>Estimated tax:</div>
-            <span>$</span><div class='estimated-tax'>${moneyFormat(estimatedTax)}</div>
+            <div>
+               $<div class='estimated-tax'>${moneyFormat(estimatedTax)}</div>
+            </div>
          </div>
 
          <div class='payment-summary-row'>
             <div><b>Total Price:</b></div>
-            <span>$</span><div class='total-price'><b>${moneyFormat(totalPrice)} </b></div>
+            <div>
+              $<div class='total-price'><b>${moneyFormat(totalPrice)} </b></div>
+            </div>
          </div>
 
          <button class='place-order-button'>Place Order</button>       

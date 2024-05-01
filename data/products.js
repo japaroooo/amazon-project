@@ -1,8 +1,5 @@
 import moneyFormat from '../script/utils/money.js';
 
-
-export { products, getProduct }
-
 function getProduct(productId) {
   let matchingProduct = '';
 
@@ -33,7 +30,18 @@ class Product {
   getPrice() {
     return `$${moneyFormat(this.priceCents)}`
   }
+
 }
+
+class Clothing extends Product {
+  #sizeChartLink
+
+  constructor(productDetails) {
+    super(productDetails)
+    this.#sizeChartLink = productDetails.sizeChartLink
+  }
+}
+
 
 const products = [
   {
@@ -507,7 +515,11 @@ const products = [
     keywords: ['sweaters', 'hoodies', 'apparel', 'mens'],
   },
 ].map(productDetail => {
+  if (productDetail.type === 'clothing') {
+    return new Clothing(productDetail)
+  }
   return new Product(productDetail)
 });
 
-console.log(products);
+
+export { products, getProduct }

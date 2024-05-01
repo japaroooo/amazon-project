@@ -1,4 +1,4 @@
-import { loadFromStorage, cart } from '../../data/cart.mjs';
+import { loadFromStorage, cart } from '../../data/cart.js';
 
 import { renderOrderSummary } from '../../features/checkout/order-summary.js';
 
@@ -37,7 +37,6 @@ describe('Test Suite: Order Summary', () => {
       console.log(localStorage);
       document.querySelector('.js-test-container').innerHTML = ''
    })
-
 
    it('loads the cart products visually', () => {
 

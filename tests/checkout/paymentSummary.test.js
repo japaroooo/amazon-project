@@ -19,5 +19,6 @@ describe('Test Suite: Payment Summary', () => {
 
       expect(document.querySelector('.total-price').innerText).toEqual(totalPrice.toFixed(2))
 
+
    })
 })

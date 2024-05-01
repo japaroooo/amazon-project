@@ -36,7 +36,9 @@ header div {
    align-items: center;
 }
 
-
+.payment-summary-row>div {
+   display: flex;
+}
 
 main {
    margin-top: 200px !important;
@@ -163,6 +165,8 @@ b.red,
    padding-bottom: 10px;
    border-bottom: 1px solid rgba(0, 0, 0, 0.321);
 }
+
+
 
 .place-order-button {
    padding: 7px;
