@@ -29,7 +29,7 @@ class Cart {
    }
 
    addToCart(itemQuantity = 1, productId) {
-      let matchingProduct = '';
+      let matchingProduct;
 
       this.cartItems.forEach((product) => {
          if (product.productId === productId) {
@@ -47,13 +47,7 @@ class Cart {
    }
 
    updateCartQuantity() {
-      let cartQuantity = 0
-
-      this.cartItems.forEach((cartItem) => {
-         cartQuantity += +cartItem.quantity;
-      });
-
-      return cartQuantity
+      return this.cartItems.reduce((currentSum, item) => item.quantity + currentSum, 0)
    }
 
    calculateCartQuantity(inputValue, productId) {
@@ -63,7 +57,6 @@ class Cart {
             cartItem.quantity = inputValue
          }
       })
-      console.log(localStorage);
 
       this.saveToStorage()
    }
