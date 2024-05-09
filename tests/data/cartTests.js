@@ -1,4 +1,4 @@
-import { cart, addToCart, loadFromStorage, calculateCartQuantity, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
+import cart from '../../data/cart-class.js';
 
 
 describe('Test Suite: Add to cart', () => {
@@ -20,9 +20,9 @@ describe('Test Suite: Add to cart', () => {
          return products
       })
 
-      loadFromStorage()
+      cart.loadFromStorage()
 
-      addToCart(1, 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
+      cart.addToCart(1, 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
 
       expect(localStorage.setItem).toHaveBeenCalledTimes(1)
    })
@@ -30,8 +30,8 @@ describe('Test Suite: Add to cart', () => {
 
    it('Add new products from the catalog', () => {
 
-      expect(cart.length).toEqual(3)
-      expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify([{
+      expect(cart.cartItems.length).toEqual(3)
+      expect(localStorage.setItem).toHaveBeenCalledWith('cart-class', JSON.stringify([{
          quantity: 3, productId: productId1, deliveryOptionId: '1'
       },
       {
@@ -45,12 +45,12 @@ describe('Test Suite: Add to cart', () => {
    it('Updates the quantity of the same product', () => {
 
 
-      calculateCartQuantity(2, 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
-      expect(cart.length).toEqual(3)
-      expect(cart[2].quantity).toEqual(2)
-      expect(cart[2].productId).toBe('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+      cart.calculateCartQuantity(2, 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
+      expect(cart.cartItems.length).toEqual(3)
+      expect(cart.cartItems[2].quantity).toEqual(2)
+      expect(cart.cartItems[2].productId).toBe('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
 
-      expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify([{
+      expect(localStorage.setItem).toHaveBeenCalledWith('cart-class', JSON.stringify([{
          quantity: 3, productId: productId1, deliveryOptionId: '1'
       },
       {
@@ -64,9 +64,9 @@ describe('Test Suite: Add to cart', () => {
 
    it('Remove from cart when click', () => {
 
-      removeFromCart(productId2)
-      expect(cart.length).toEqual(2)
-      expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify(
+      cart.removeFromCart(productId2)
+      expect(cart.cartItems.length).toEqual(2)
+      expect(localStorage.setItem).toHaveBeenCalledWith('cart-class', JSON.stringify(
          [{
             quantity: 3, productId: productId1, deliveryOptionId: '1'
          },
@@ -77,21 +77,21 @@ describe('Test Suite: Add to cart', () => {
    })
 
    it('Remove from cart when not click', () => {
-      removeFromCart('77919bbe-0e56-475b-adde-4f24dfed3a04')
+      cart.removeFromCart('77919bbe-0e56-475b-adde-4f24dfed3a04')
 
-      expect(cart.length).toEqual(3)
+      expect(cart.cartItems.length).toEqual(3)
    })
 
 
    it('updates the delivery option', () => {
 
-      updateDeliveryOption(productId1, 3)
+      cart.updateDeliveryOption(productId1, 3)
 
 
-      expect(cart[0].deliveryOptionId).toBe(3)
-      expect(cart[0].productId).toBe(productId1)
-      expect(cart[0].quantity).toEqual(3)
+      expect(cart.cartItems[0].deliveryOptionId).toBe(3)
+      expect(cart.cartItems[0].productId).toBe(productId1)
+      expect(cart.cartItems[0].quantity).toEqual(3)
 
-      expect(cart.length).toEqual(3)
+      expect(cart.cartItems.length).toEqual(3)
    })
 })

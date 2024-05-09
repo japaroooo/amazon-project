@@ -1,6 +1,7 @@
-import { loadFromStorage, cart } from '../../data/cart.js';
+import cart from '../../data/cart-class.js';
 
-import { renderOrderSummary } from '../../features/checkout/order-summary.js';
+import { renderOrderSummary } from '../../features/checkout/order-summary-class.js';
+import { renderPaymentSummary } from '../../features/checkout/payment-summary-class.js';
 
 describe('Test Suite: Order Summary', () => {
    const product1 = '83d4ca15-0f35-48f5-b7a3-1ea210004f2e'
@@ -9,9 +10,9 @@ describe('Test Suite: Order Summary', () => {
    beforeEach(() => {
 
       spyOn(localStorage, 'setItem')
-
       document.querySelector('.js-test-container').innerHTML =
          `
+            <div class='checkout-header'></div>
             <div class='js-cart-summary'></div>
             <div class='js-payment-summary'></div>
          `
@@ -26,19 +27,21 @@ describe('Test Suite: Order Summary', () => {
       })
 
 
-      loadFromStorage()
+      cart.loadFromStorage()
+
       renderOrderSummary()
+      renderPaymentSummary()
 
       // expect(localStorage.setItem).toHaveBeenCalledTimes(1)
 
    })
 
    afterAll(() => {
-      console.log(localStorage);
       document.querySelector('.js-test-container').innerHTML = ''
    })
 
    it('loads the cart products visually', () => {
+      console.log(document.querySelector('.js-payment-summary'));
 
       expect(document.querySelectorAll(`.js-cart-item`).length)
          .toEqual(2)
@@ -61,13 +64,13 @@ describe('Test Suite: Order Summary', () => {
 
       expect(document.querySelector(`.cart-item-${product1}`)).toBeNull()
 
-      expect(cart[0].productId).toEqual(product2)
+      expect(cart.cartItems[0].productId).toEqual(product2)
 
 
       expect(
          localStorage.setItem
       ).toHaveBeenCalledWith(
-         'cart', JSON.stringify([{
+         'cart-class', JSON.stringify([{
             quantity: 1,
             productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
             deliveryOptionId: '2'
@@ -89,6 +92,5 @@ describe('Test Suite: Order Summary', () => {
          '$7.99'
       )
    })
-
 
 }) 
