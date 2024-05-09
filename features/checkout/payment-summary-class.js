@@ -3,10 +3,10 @@ import { getDeliveryOption } from '../../data/delivery-options.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money.js';
 
-renderPaymentSummary()
+// renderPaymentSummary()
 
 export function renderPaymentSummary() {
-   let generateHtml = ''
+   let paymentSummaryHTML = ''
    let itemsPrice = 0
    let shippingFee = 0
 
@@ -22,7 +22,7 @@ export function renderPaymentSummary() {
    const estimatedTax = totalBeforeTax * 0.1
    const totalPrice = totalBeforeTax + estimatedTax
 
-   generateHtml +=
+   paymentSummaryHTML =
       `
          <div class="payment-summary-row">
             <b class='payment-title'>Order Summary</b>
@@ -61,8 +61,10 @@ export function renderPaymentSummary() {
             </div>
          </div>
 
-         <button class='place-order-button'>Place Order</button>       
+         <button class='primary-button'>Place Order</button>       
          `
 
-   document.querySelector('.js-payment-summary').innerHTML = generateHtml
+   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML
+
 }
+

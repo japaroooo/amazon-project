@@ -6,7 +6,7 @@ import { deliveryOptions, getDeliveryOption } from '../../data/delivery-options.
 import { renderPaymentSummary } from './payment-summary-class.js';
 import { renderHeader } from './checkout-header-class.js';
 
-renderOrderSummary()
+// renderOrderSummary()
 
 export function renderOrderSummary() {
    let generateHTML = ''
@@ -18,9 +18,9 @@ export function renderOrderSummary() {
 
       generateHTML +=
          `
-           <div class='cart-item-${matchingProduct.id} js-cart-item cart-item'>
+           <div class='cart-item-${matchingProduct.id} js-cart-item card'>
              <span>Delivery Date:</span>
-             <div class='delivery-date-title js-delivery-item-${matchingProduct.id}'>
+             <div class='delivery-date-title green js-delivery-item-${matchingProduct.id}'>
                 ${calculateDeliveryDate(deliveryOption.deliveryDays).dateString}
              </div>
            
@@ -30,7 +30,7 @@ export function renderOrderSummary() {
                          <b>${matchingProduct.name}</b>
                      </div>
                      <div class='item-price'>
-                         <b class="red">${matchingProduct.getPrice()}</b>
+                         <b class="green">${matchingProduct.getPrice()}</b>
                      </div>
                      <div class='quantity-container quantity-details-${matchingProduct.id}'>
  
@@ -42,7 +42,7 @@ export function renderOrderSummary() {
                            Update
                          </span>
  
-                         <span class='js-delete-button js-delete-link-${matchingProduct.id} span-button' data-product-id='${matchingProduct.id}'>
+                         <span class='js-delete-button red js-delete-link-${matchingProduct.id} span-button' data-product-id='${matchingProduct.id}'>
                            Delete
                          </span>
  

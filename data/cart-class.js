@@ -1,5 +1,3 @@
-
-
 class Cart {
 
    cartItems = []
@@ -90,6 +88,7 @@ class Cart {
       this.saveToStorage()
    }
 }
+
 let cart = new Cart('cart-class')
 
 export default cart

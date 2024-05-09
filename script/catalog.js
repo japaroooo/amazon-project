@@ -11,12 +11,12 @@ function renderProducts() {
    products.forEach((product) => {
       generateHTML += `
         <div class='product-container' data-product-id='${product.id}'>
-              <div class='product-name'>${product.name}</div>
+              <h3 class='product-name'>${product.name}</h1>
               <div class='product-rating-container'> 
               <div> Star: ${product.rating.stars} </div>
               <div> Rating: ${product.rating.count} </div>
               </div>
-              <div class='product-price'>${product.getPrice()}</div>
+              <h3 class='product-price'>${product.getPrice()}</h3>
               
               <select class='js-quantity-selector-${product.id}'>
                   <option selected value='1'>1</option>
@@ -26,7 +26,7 @@ function renderProducts() {
                   <option value='5'>5</option>
               </select>
               <div class='added-to-cart'>✔ Added</div>
-              <button class='add-cart' data-product-id='${product.id}'>Add to Cart</button>
+              <button class='add-cart primary-button' data-product-id='${product.id}'>Add to Cart</button>
         </div>
          `;
    });

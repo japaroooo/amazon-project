@@ -1,17 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-:root {
-   font-family: "Montserrat", sans-serif;
-   font-optical-sizing: auto;
-   font-style: normal;
-   --primary-color: rgb(28, 190, 28);
+body>* {
+   margin: auto;
+   max-width: 70%;
 }
 
-body {
-   margin: 0;
-   margin-bottom: 50px;
-}
-
+/* 
 header {
    display: flex;
    justify-content: space-around;
@@ -21,30 +13,19 @@ header {
    top: 0;
    left: 0;
    right: 0;
-}
+} */
+
 
 a {
    text-decoration: none;
    color: black;
 }
 
-header div {
-   display: flex;
-   width: 100%;
-   max-width: 60%;
-
-   align-items: center;
-}
 
 .payment-summary-row>div {
    display: flex;
 }
 
-main {
-   margin-top: 200px !important;
-   margin: auto;
-   max-width: 70%;
-}
 
 input[type='text'] {
    width: 5%;
@@ -55,7 +36,6 @@ section {
    grid-template-columns: 1fr 30%;
 }
 
-
 .middle-section {
    flex: 1;
    display: flex;
@@ -63,21 +43,12 @@ section {
    font-size: 25px;
 }
 
+
 .summary,
 .js-payment-summary {
    gap: calc(5px + 1vh);
 }
 
-.js-payment-summary,
-.cart-item {
-   border: 1px solid rgba(0, 0, 0, 0.155);
-   border-radius: 10px;
-   padding: 15px 10px;
-   display: flex;
-   flex-direction: column;
-   padding: 20px;
-   height: fit-content;
-}
 
 
 .order-summary-title {
@@ -98,6 +69,7 @@ section {
    color: rgb(43, 0, 255);
 }
 
+
 .span-button:hover {
    text-decoration: underline;
    color: rgb(0, 178, 218)
@@ -107,11 +79,6 @@ section {
    display: grid;
    grid-template-columns: 1fr 35%;
    gap: 10px;
-}
-
-b.red,
-.red-text {
-   color: red;
 }
 
 .green {
@@ -140,13 +107,18 @@ b.red,
    margin-bottom: 10px;
    font-weight: 500;
    font-size: 20px;
-   color: green;
+}
+
+.js-delete-button {
+   color: var(--warning);
 }
 
 .js-payment-summary {
    display: flex;
    flex-direction: column;
    gap: 10px;
+   position: fixed;
+
 }
 
 .payment-summary-row {
@@ -156,7 +128,7 @@ b.red,
 }
 
 .payment-summary-row div:nth-child(2) {
-   letter-spacing: 1px;
+   letter-spacing: 2px;
 }
 
 .shipping-price,
@@ -164,23 +136,4 @@ b.red,
 .payment-title {
    padding-bottom: 10px;
    border-bottom: 1px solid rgba(0, 0, 0, 0.321);
-}
-
-
-
-.place-order-button {
-   padding: 7px;
-   border-radius: 7px;
-   cursor: pointer;
-   margin-top: 5px;
-   color: white;
-   background: var(--primary-color);
-   border: none;
-
-   transition: all 0.5s ease-in;
-}
-
-.place-order-button:hover {
-   color: rgba(0, 0, 0, 0.658);
-   background-color: rgba(255, 223, 41, 0.796)
 }

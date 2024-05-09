@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+   --ff: "Montserrat", sans-serif;
+   --color-primary: rgb(28, 190, 28);
+   --color-secondary: rgb(255, 230, 10);
+   --h3: bold max(15px, 1vw)/max(15px, 1vw) var(--ff);
+   --button-text: 500 20px;
+   --button-text-2: 500 18px;
+   --warning: red;
+}
+
+a,
+select,
+button,
+input {
+   cursor: pointer;
+}
+
+a {
+   text-decoration: none;
+   color: white;
+   padding: 5px 8px;
+}
+
+h3 {
+   font: var(--h3);
+}
+
+body {
+   font-family: var(--ff);
+   margin: 0;
+}
+
+header {
+   display: flex;
+   justify-content: space-between;
+   height: 60px;
+   align-items: center;
+   right: 0;
+   left: 0;
+   top: 0;
+   padding: 0 10px;
+}
+
+main {
+   margin: 70px 0 10px 10px;
+}
+
+.primary-button {
+   background-color: var(--color-primary);
+   font: var(--button-text-2);
+   padding: 0.5rem 2rem;
+   border-radius: 15px;
+   border: none;
+   transition: all 0.2s;
+}
+
+.primary-button:hover {
+   color: white;
+   scale: 1.05;
+}
+
+
+.card {
+   border: 1px solid rgba(0, 0, 0, 0.155);
+   border-radius: 10px;
+   padding: 20px;
+   display: flex;
+   flex-direction: column;
+   height: fit-content;
+}
