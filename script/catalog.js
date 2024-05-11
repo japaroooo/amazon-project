@@ -1,9 +1,8 @@
-import { products } from '../data/products.js';
+import { loadProducts, products } from '../data/products.js';
 import cart from '../data/cart-class.js';
 
 
-renderProducts()
-
+loadProducts(renderProducts)
 
 function renderProducts() {
    let generateHTML = ''
@@ -40,8 +39,6 @@ function renderProducts() {
          const itemQuantity = document.querySelector(`.js-quantity-selector-${productId}`);
 
          cart.addToCart(+itemQuantity.value, productId);
-
-
          showAddCheck(index);
          document.querySelector('.js-cart-quantity').innerHTML = cart.updateCartQuantity()
          itemQuantity.selectedIndex = 0;
