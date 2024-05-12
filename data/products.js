@@ -1,16 +1,5 @@
 import moneyFormat from '../script/utils/money.js';
 
-function getProduct(productId) {
-  let matchingProduct = '';
-
-  products.forEach((product) => {
-    if (product.id === productId) {
-      matchingProduct = product;
-    }
-  });
-
-  return matchingProduct
-}
 
 class Product {
   id
@@ -44,7 +33,30 @@ class Clothing extends Product {
 
 let products
 
+function fetchProducts() {
+  const productDataPromise = fetch('https://supersimplebackend.dev/products')
+    .then((response) => {
+      return response.json()
+    })
+    .then(productData => {
+      products = productData.map(productDetail => {
+        if (productDetail.type === 'clothing') {
+          return new Clothing(productDetail)
+        }
+        return new Product(productDetail)
+      })
+    })
+
+  return productDataPromise
+}
+
+// fetchProducts()
+//   .then(() => {
+//     console.log('Promise has been fulfilled, next step?');
+//   })
+
 function loadProducts(fun) {
+
   const xhr = new XMLHttpRequest()
 
   try {
@@ -68,7 +80,21 @@ function loadProducts(fun) {
   }
 }
 
-export { products, getProduct, loadProducts }
+function getProduct(productId) {
+  let matchingProduct = '';
+  fetchProducts()
+
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
+
+  return matchingProduct
+}
+
+
+export { products, getProduct, loadProducts, fetchProducts }
 
 //getProducts()
 
