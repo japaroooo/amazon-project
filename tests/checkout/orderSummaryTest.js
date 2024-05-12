@@ -1,4 +1,5 @@
 import cart from '../../data/cart-class.js';
+import { fetchProducts, loadProducts } from '../../data/products.js';
 
 import { renderOrderSummary } from '../../features/checkout/order-summary-class.js';
 import { renderPaymentSummary } from '../../features/checkout/payment-summary-class.js';
@@ -7,8 +8,12 @@ describe('Test Suite: Order Summary', () => {
    const product1 = '83d4ca15-0f35-48f5-b7a3-1ea210004f2e'
    const product2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d'
 
-   beforeEach(() => {
+   beforeAll(done => {
+      fetchProducts().then(done)
+   })
 
+   beforeEach((done) => {
+      done()
       spyOn(localStorage, 'setItem')
       document.querySelector('.js-test-container').innerHTML =
          `
