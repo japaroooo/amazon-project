@@ -64,6 +64,7 @@ export function renderPaymentSummary() {
          <button class='primary-button'>Place Order</button>       
          `
 
+   document.querySelector(".js-payment-summary").classList.add('card')
    document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML
 
 }
