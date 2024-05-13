@@ -46,7 +46,7 @@ function fetchProducts() {
         return new Product(productDetail)
       })
     })
-
+  console.log('Product loaded');
   return productDataPromise
 }
 
@@ -82,7 +82,6 @@ function loadProducts(fun) {
 
 function getProduct(productId) {
   let matchingProduct = '';
-  fetchProducts()
 
   products.forEach((product) => {
     if (product.id === productId) {

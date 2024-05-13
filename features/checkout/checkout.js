@@ -4,17 +4,38 @@ import { renderHeader } from './checkout-header-class.js';
 import { loadProducts, fetchProducts, products } from '../../data/products.js';
 import cart from '../../data/cart-class.js'
 // import '../../data/backend-project.js'
-Promise.allSettled([
-   fetchProducts(),
-   new Promise((resolve, reject) => {
-      cart.loadCart(() => resolve('Cart loads successfully'))
-   })
-]).then((value1) => {
+
+async function loadPage() {
+   console.log('Page loaded');
+
+   await Promise.allSettled([
+      fetchProducts(),
+      cart.fetchCart()
+   ])
+
+   // await new Promise((resolve) => {
+   //    cart.loadCart(() => resolve())
+   // })
 
    renderHeader()
    renderOrderSummary()
    renderPaymentSummary()
-})
+   console.log('Checkout loaded');
+}
+
+loadPage()
+
+// Promise.allSettled([
+//    fetchProducts(),
+//    new Promise((resolve, reject) => {
+//       cart.loadCart(() => resolve('Cart loads successfully'))
+//    })
+// ]).then((value1) => {
+
+//    renderHeader()
+//    renderOrderSummary()
+//    renderPaymentSummary()
+// })
 
 
 // new Promise((resolve) => {

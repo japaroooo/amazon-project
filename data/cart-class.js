@@ -106,6 +106,18 @@ class Cart {
          console.error(newErr);
       }
    }
+
+   fetchCart(fun) {
+      try {
+         const cartPromise = fetch('https://supersimplebackend.dev/cart')
+            .then((response) => response)
+
+         console.log('Cart loaded');
+         return cartPromise
+      } catch (error) {
+         console.error(error);
+      }
+   }
 }
 
 let cart = new Cart('cart-class')
