@@ -3,30 +3,18 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
+      <title>Catalog</title>
       <link rel="stylesheet" href="/css/style.css" />
       <link rel="stylesheet" href="/css/catalog.css" />
    </head>
 
    <body>
-      <header class="amazon-header">
-         <section><a href="" class="amazon-link">Amazon</a></section>
-         <section class="middle-section">
-            <input type="text" placeholder="Search" class="search-input" />🔎
-         </section>
-         <section class="right-section">
-            <a href="" class="order-link"
-               ><span>Returns</span><span>& Orders</span></a
-            >
-            <a href="/checkout.html" class="cart-link">
-               <span class="js-cart-quantity"></span><span>Cart</span></a
-            >
-         </section>
-      </header>
+      <header class="header amazon-header"></header>
       <main>
          <div class="products-grid"></div>
       </main>
 
+      <script type="module" src="/script/header.js"></script>
       <script type="module" src="/script/catalog.js"></script>
    </body>
 </html>
