@@ -4,7 +4,7 @@
    --ff: "Montserrat", sans-serif;
    --color-primary: rgb(28, 190, 28);
    --color-secondary: rgb(255, 230, 10);
-   --h3: 600 18px/15px var(--ff);
+   --h3: 600 18px/18px var(--ff);
    --h4: bold max(15px, 1vw)/max(15px, 1vw) var(--ff);
    --button-text: 500 20px;
    --button-text-2: 500 18px;

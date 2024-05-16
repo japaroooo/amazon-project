@@ -45,12 +45,16 @@ function fetchProducts() {
         }
         return new Product(productDetail)
       })
+      console.log('Product loaded');
     })
-  console.log('Product loaded');
+    .catch(error => {
+      console.log(error);
+      return
+    })
   return productDataPromise
 }
 
-// fetchProducts()
+// fetchProducts()s
 //   .then(() => {
 //     console.log('Promise has been fulfilled, next step?');
 //   })

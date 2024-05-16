@@ -1,29 +1,35 @@
 import { renderOrderSummary } from './order-summary-class.js';
 import { renderPaymentSummary } from './payment-summary-class.js';
 import { renderHeader } from './checkout-header-class.js';
-import { loadProducts, fetchProducts, products } from '../../data/products.js';
+import { fetchProducts } from '../../data/products.js';
 import cart from '../../data/cart-class.js'
-// import '../../data/backend-project.js'
+import '../../data/backend-project.js'
 
 async function loadPage() {
-   console.log('Page loaded');
+   try {
 
-   await Promise.allSettled([
-      fetchProducts(),
-      cart.fetchCart()
-   ])
+      console.log('Page loaded');
 
-   // await new Promise((resolve) => {
-   //    cart.loadCart(() => resolve())
-   // })
+      await Promise.allSettled([
+         fetchProducts(),
+         cart.fetchCart()
+      ])
 
-   renderHeader()
-   renderOrderSummary()
-   renderPaymentSummary()
-   console.log('Checkout loaded');
+      // await new Promise((resolve) => {
+      //    cart.loadCart(() => resolve())
+      // })
+
+      renderHeader()
+      renderOrderSummary()
+      renderPaymentSummary()
+      console.log('Checkout loaded');
+   } catch (error) {
+      console.log(error);
+   }
 }
 
 loadPage()
+
 
 // Promise.allSettled([
 //    fetchProducts(),

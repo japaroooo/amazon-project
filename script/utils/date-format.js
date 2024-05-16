@@ -24,4 +24,8 @@ function calculateDeliveryDate(deliveryDate) {
    return { dateString, dateToday }
 }
 
-export { calculateDeliveryDate, isWeekend }
+function changeDateFormat(date) {
+   return dayjs(date).format('MMM DD YYYY')
+}
+
+export { calculateDeliveryDate, isWeekend, changeDateFormat }
