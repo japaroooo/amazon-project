@@ -7,7 +7,7 @@ document.querySelector(".header").innerHTML =
          <input type="text" placeholder="Search" class="search-input" />🔎
       </section>
       <section class="right-section">
-         <a href="/orders.html" class="order-link"
+         <a href="/features/orders/orders.html" class="order-link"
             ><span>Returns</span><span>& Orders</span></a
          >
          <a href="/checkout.html" class="cart-link">

@@ -9,24 +9,33 @@ function renderProducts() {
 
    products.forEach((product) => {
       generateHTML += `
-        <div class='product-container' data-product-id='${product.id}'>
-              <h3 class='product-name'>${product.name}</h1>
-              <div class='product-rating-container'> 
-              <div> Star: ${product.rating.stars} </div>
-              <div> Rating: ${product.rating.count} </div>
-              </div>
-              <h3 class='product-price'>${product.getPrice()}</h3>
-              
-              <select class='js-quantity-selector-${product.id}'>
-                  <option selected value='1'>1</option>
-                  <option value='2'>2</option>
-                  <option value='3'>3</option>
-                  <option value='4'>4</option>
-                  <option value='5'>5</option>
-              </select>
-              <div class='added-to-cart'>✔ Added</div>
-              <button class='add-cart primary-button' data-product-id='${product.id}'>Add to Cart</button>
-        </div>
+         <div class='product-container' data-product-id='${product.id}'>
+
+            <div>
+               <h3 class='product-name'>${product.name}</h3>
+            </div>
+               
+            <div class='product-rating-container'> 
+               <div> Star: ${product.rating.stars} </div>
+               <div> Rating: ${product.rating.count} </div>
+            </div>
+               
+               
+            <select class='js-quantity-selector-${product.id}'>
+               <option selected value='1'>1</option>
+               <option value='2'>2</option>
+               <option value='3'>3</option>
+               <option value='4'>4</option>
+               <option value='5'>5</option>
+            </select>
+            <h3 class='product-price'>${product.getPrice()}</h3>
+               
+
+            <div>
+               <div class='added-to-cart'>✔ Added</div>
+               <button class='add-cart primary-button' data-product-id='${product.id}'>Add to Cart</button>
+            </div>
+         </div>
          `;
    });
 
