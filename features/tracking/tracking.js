@@ -12,9 +12,9 @@ async function renderTrackingPage() {
 
    generateHtml +=
       `
-         <main class='card'>
+         <main class='tracking-wrapper'>
             <section>Ordered on ${changeDateFormat(currOrder.orderTime)}</section>
-            <section class=''>
+            <section class='item-container'>
                ${productsList(currOrder.products)}
             </section>
          </main>
@@ -29,11 +29,11 @@ async function renderTrackingPage() {
          console.log(currentProduct);
          productHTML +=
             `
-               <div class='card'>
+               <div class='item'>
                   <div><h3 >${currentProduct.name}</h3></div>
                   <div>Quantity: ${product.quantity}</div>
                   <div> Delivery Time(ETA): <b>${changeDateFormat(product.estimatedDeliveryTime)}</b> </div>
-                  <button class='primary-button'>Track Package</button>
+                  <button class='primary-button tracking-button'>Track Package</button>
                </div>
             `
       })

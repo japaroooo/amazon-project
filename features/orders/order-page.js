@@ -15,13 +15,13 @@ async function renderOrderPage() {
          `
             <div class='card order-box'>        
                <section class='order-info'>
-                  <div><span>Total Price</span><h3>${totalPrice}</h3></div>
+                  <div><span>Total Price</span><h3>$${totalPrice}</h3></div>
                   <div><span>Time Ordered</span><h3>${changeDateFormat(loadOrder.orderTime)}</h3></div>
                   <div><span>Order ID</span><h3>${loadOrder.id}</h3></div>
                </section>
                   
-               <section class='order-products-list'>
-                  <div>
+               <section class='order-products'>
+                  <div class='products-list'>
                      ${displayProducts(loadOrder.products)}
                   </div>
                   <div>
@@ -46,11 +46,11 @@ async function renderOrderPage() {
          const { productId, quantity, estimatedDeliveryTime } = product
          const productName = getProduct(productId)
          html +=
-            `  
-               <div>
-                  <div> Product Name: <b>${productName.name}</b> </div>
-                  <div> Quantity: <b>${quantity}</b> </div>
-               </div>
+            `             
+                  <div>
+                     <div> Product Name: <b>${productName.name}</b> </div>
+                     <div> Quantity: <b>${quantity}</b> </div>
+                  </div>
             `
       })
       return html

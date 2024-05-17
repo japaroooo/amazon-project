@@ -30,10 +30,16 @@ a {
    flex-direction: column;
 }
 
-.order-products-list {
+.order-products {
    display: flex;
 }
 
-.order-products-list>div {
+.products-list {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+}
+
+.order-products>div {
    flex: 1;
 }
