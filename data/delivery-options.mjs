@@ -23,16 +23,12 @@ const deliveryOptions = [
 
 
 function getDeliveryOption(deliveryOptionId) {
-   let deliveryOption
+   const deliveryOption = deliveryOptions.reduce((acc, curr) => {
+      acc[curr.id] = curr
+      return acc
+   }, {})
 
-   deliveryOptions.forEach(delivery => {
-      if (delivery.id === deliveryOptionId) {
-
-         deliveryOption = delivery
-      }
-   })
-
-   return deliveryOption
+   return deliveryOption[deliveryOptionId]
 }
 
 export { deliveryOptions, getDeliveryOption }

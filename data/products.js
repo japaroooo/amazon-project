@@ -85,15 +85,12 @@ function loadProducts(fun) {
 }
 
 function getProduct(productId) {
-  let matchingProduct = '';
+  const matchingProduct = products.reduce((acc, curr) => {
+    acc[curr.id] = curr
+    return acc
+  }, {})
 
-  products.forEach((product) => {
-    if (product.id === productId) {
-      matchingProduct = product;
-    }
-  });
-
-  return matchingProduct
+  return matchingProduct[productId]
 }
 
 

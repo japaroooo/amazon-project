@@ -18,15 +18,13 @@ class Order {
    }
 
    getOrder(orderId) {
-      let matchingOrder
+      let matchingOrder = this.orders.reduce((acc, order) => {
+         acc[order.id] = order
+         return acc
+      }, {})
 
-      this.orders.forEach(order => {
-         if (order.id === orderId) {
-            matchingOrder = order
-         }
-      })
-
-      return matchingOrder
+      console.log(matchingOrder);
+      return matchingOrder[orderId]
    }
 }
 const order = new Order()
