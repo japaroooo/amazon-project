@@ -4,10 +4,15 @@
    --ff: "Montserrat", sans-serif;
    --color-primary: rgb(28, 190, 28);
    --color-secondary: rgb(255, 230, 10);
-   --h3: bold max(15px, 1vw)/max(15px, 1vw) var(--ff);
+   --h3: 600 18px/18px var(--ff);
+   --h4: bold max(15px, 1vw)/max(15px, 1vw) var(--ff);
    --button-text: 500 20px;
    --button-text-2: 500 18px;
    --warning: red;
+}
+
+* {
+   margin: 0;
 }
 
 a,
@@ -27,9 +32,14 @@ h3 {
    font: var(--h3);
 }
 
+h4 {
+   font: var(--h4);
+}
+
 body {
    font-family: var(--ff);
-   margin: 0;
+   width: 95%;
+   margin-inline: auto;
 }
 
 header {
@@ -69,4 +79,53 @@ main {
    display: flex;
    flex-direction: column;
    height: fit-content;
+}
+
+.amazon-header {
+   background-color: var(--color-primary);
+   position: fixed;
+}
+
+.amazon-header .middle-section {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   max-width: 50%;
+   justify-content: center;
+   gap: 10px;
+}
+
+.search-input {
+   flex: 1;
+   padding: 8px 10px;
+   font-size: 16px;
+   border-radius: 5px;
+   border: none;
+}
+
+.search-input:focus,
+.search-input:active {
+   outline: none;
+   border: 2px solid orange;
+}
+
+.right-section {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+}
+
+.order-link,
+.cart-link,
+.amazon-link {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   border: 2px solid transparent;
+}
+
+.amazon-link:hover,
+.order-link:hover,
+.cart-link:hover {
+   border: 2px solid white;
 }

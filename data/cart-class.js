@@ -87,6 +87,37 @@ class Cart {
       matchingProduct.deliveryOptionId = deliveryOptId
       this.saveToStorage()
    }
+
+   loadCart(fun) {
+      const xhr = new XMLHttpRequest()
+
+      try {
+         xhr.addEventListener('load', () => {
+            console.log(xhr.response);
+
+            fun()
+         })
+
+         xhr.open('GET', 'https://supersimplebackend.dev/cart')
+         xhr.send()
+
+      } catch (error) {
+         const newErr = new Error(error)
+         console.error(newErr);
+      }
+   }
+
+   fetchCart(fun) {
+      try {
+         const cartPromise = fetch('https://supersimplebackend.dev/cart')
+            .then((response) => response)
+
+         console.log('Cart loaded');
+         return cartPromise
+      } catch (error) {
+         console.error(error);
+      }
+   }
 }
 
 let cart = new Cart('cart-class')

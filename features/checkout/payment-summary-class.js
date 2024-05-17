@@ -2,6 +2,8 @@ import cart from '../../data/cart-class.js'
 import { getDeliveryOption } from '../../data/delivery-options.mjs';
 import { getProduct } from '../../data/products.js';
 import moneyFormat from '../../script/utils/money.js';
+import { placeOrder } from '../../data/backend-project.js'
+import order from '../../data/order.js';
 
 // renderPaymentSummary()
 
@@ -61,10 +63,16 @@ export function renderPaymentSummary() {
             </div>
          </div>
 
-         <button class='primary-button'>Place Order</button>       
+         <button class='primary-button js-order-button'>Place Order</button>       
          `
 
+   document.querySelector(".js-payment-summary").classList.add('card')
    document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML
+
+   document.querySelector('.js-order-button').addEventListener('click', async () => {
+      await placeOrder(cart.cartItems)
+
+   })
 
 }
 
